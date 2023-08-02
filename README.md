@@ -5,6 +5,8 @@ Esse projeto tem como objetivo o desenvolvimento de uma RESTFull API em .NET Cor
 ## Tecnologias Utilizadas
 
 * .NET Core
+* Docker
+* Identity Framework
 
 ## Métodos Disponíveis Para Consumo
 
