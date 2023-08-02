@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IATecTasks.API", "IATecTask
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IATecTasks.Domain", "IATecTasks.Domain\IATecTasks.Domain.csproj", "{20324154-23F2-4EB6-AC28-E0E09EDED320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IATecTasks.DomainTest", "..\..\test\IATecTasks.DomainTest\IATecTasks.DomainTest.csproj", "{F0E27F4E-A08B-4F5C-A4F6-703014B40DAC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IATecTasks.DomainTest", "..\test\IATecTasks.DomainTest\IATecTasks.DomainTest.csproj", "{F0E27F4E-A08B-4F5C-A4F6-703014B40DAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
