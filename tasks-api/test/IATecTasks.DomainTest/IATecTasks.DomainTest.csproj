@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\IATecTasksWebAPI\IATecTasks.Domain\IATecTasks.Domain.csproj" />
+    <ProjectReference Include="..\..\src\IATecTasks.Domain\IATecTasks.Domain.csproj" />
   </ItemGroup>
 
 </Project>

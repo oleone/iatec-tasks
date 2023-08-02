@@ -56,13 +56,12 @@ namespace IATecTasks.DomainTest.Tasks
             expectedTask.ToExpectedObject().ShouldMatch(task);
         }
 
-
         [Theory]
         [InlineData("")]
         [InlineData(null)]
         public void TaskMustHaveTitle(string title)
         {
-            Assert.Throws<ArgumentException>(() => TaskBuilder.New().WithTitle(title).Build()).WithMessage("Expected field title");
+            Assert.Throws<ArgumentException>(() => TaskBuilder.New().WithTitle(title).Build()).WithMessage("Required field title");
         }
 
         public void Dispose()

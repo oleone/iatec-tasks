@@ -16,7 +16,7 @@ namespace IATecTasks.Domain
 
         public Task(string title, string description, string userId, bool isInProgress, bool isDone)
         {
-            if (string.IsNullOrEmpty(title)) throw new ArgumentException("Required field Title");
+            if (string.IsNullOrEmpty(title)) throw new ArgumentException("Required field title");
 
             Title = title;
             Description = description;
