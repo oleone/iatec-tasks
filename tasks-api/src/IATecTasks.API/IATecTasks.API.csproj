@@ -3,6 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <Company>Acetime Soluções Digitais LTDA</Company>
+    <Authors>Bruno Leone A P Correa</Authors>
+    <RepositoryUrl>https://github.com/oleone/iatec-tasks</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
