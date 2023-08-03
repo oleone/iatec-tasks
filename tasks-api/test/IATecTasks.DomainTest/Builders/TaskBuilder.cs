@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using Bogus.DataSets;
 using ExpectedObjects.Strategies;
-using IATecTasks.Domain;
+using IATecTasks.Domain.Tasks;
 using System;
 
 namespace IATecTasks.DomainTest.Builders

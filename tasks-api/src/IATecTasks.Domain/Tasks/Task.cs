@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IATecTasks.Domain
+namespace IATecTasks.Domain.Tasks
 {
     public class Task
     {
@@ -21,7 +21,7 @@ namespace IATecTasks.Domain
             if (string.IsNullOrEmpty(userId)) throw new ArgumentException("Required field userId");
 
             Id = Guid.NewGuid().ToString();
-            
+
             Title = title;
             Description = description;
             UserId = userId;
