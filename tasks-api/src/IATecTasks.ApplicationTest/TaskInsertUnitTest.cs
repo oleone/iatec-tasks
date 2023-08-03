@@ -1,4 +1,6 @@
 using Bogus;
+using IATecTasks.Application.Dtos;
+using IATecTasks.Application.UseCases;
 using IATecTasks.Domain.Tasks;
 using IATecTasks.Repository;
 using Moq;
@@ -9,14 +11,14 @@ namespace IATecTasks.ApplicationTest
 {
     public class InsertTaskUseCaseUnitTest
     {
-        private TaskDto _taskDto;
-        private InsertTaskUseCase _insertTaskUseCase;
+        private CreateTaskDto _createTaskDto;
+        private IUseCase<CreateTaskDto> _insertTaskUseCase;
         private Mock<ITaskRepository> _taskRepositoryMock;
 
         public InsertTaskUseCaseUnitTest()
         {
             var faker = new Faker();
-            _taskDto = new TaskDto
+            _createTaskDto = new CreateTaskDto
             {
                 Title = faker.Random.Words(20),
                 Description = faker.Random.Words(50),
@@ -30,38 +32,15 @@ namespace IATecTasks.ApplicationTest
         [Fact]
         public void MustInsertTask()
         {
-            _insertTaskUseCase.Execute(_taskDto);
+            _insertTaskUseCase.Execute(_createTaskDto);
 
             _taskRepositoryMock.Verify(r => r.Insert(
                 It.Is<Task>(
-                    t => t.Title == _taskDto.Title &&
-                    t.Description == _taskDto.Description &&
-                    t.UserId == _taskDto.UserId
+                    t => t.Title == _createTaskDto.Title &&
+                    t.Description == _createTaskDto.Description &&
+                    t.UserId == _createTaskDto.UserId
                 )
             ));
         }
-    }
-
-    public class InsertTaskUseCase
-    {
-        private ITaskRepository _taskRepository;
-
-        public InsertTaskUseCase(ITaskRepository taskRepository)
-        {
-            _taskRepository = taskRepository;
-        }
-
-        public void Execute(TaskDto dto)
-        {
-            var task = new Task(dto.Title, dto.Description, dto.UserId);
-            _taskRepository.Insert(task);
-        }
-    }
-
-    public class TaskDto
-    {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string UserId { get; set; }
     }
 }
