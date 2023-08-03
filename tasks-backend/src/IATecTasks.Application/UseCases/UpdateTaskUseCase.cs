@@ -13,9 +13,9 @@ namespace IATecTasks.Application.UseCases
 
         }
 
-        public void Execute(string id, UpdateTaskDto dto)
+        public void Execute(UpdateTaskDto dto)
         {
-            _taskRepository.Update(id, dto);
+            _taskRepository.Update(dto);
         }
     }
 }

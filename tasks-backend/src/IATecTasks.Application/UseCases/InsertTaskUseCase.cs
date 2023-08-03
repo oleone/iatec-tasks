@@ -13,9 +13,9 @@ namespace IATecTasks.Application.UseCases
             _taskRepository = taskRepository;
         }
 
-        public void Execute(string id, CreateTaskDto dto)
+        public void Execute(CreateTaskDto dto)
         {
-            _taskRepository.Insert(dto);
+            _taskRepository.Add(dto);
         }
     }
 }

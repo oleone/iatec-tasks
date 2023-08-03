@@ -38,9 +38,9 @@ namespace IATecTasks.ApplicationTest
         [Fact]
         public void MustUpdateTask()
         {
-            _updateTaskUseCase.Execute(_updateTaskDto.Id, _updateTaskDto);
+            _updateTaskUseCase.Execute(_updateTaskDto);
 
-            _taskRepository.Verify(r => r.Update(_updateTaskDto.Id,
+            _taskRepository.Verify(r => r.Update(
                 It.Is<UpdateTaskDto>(
                     t => t.Title == _updateTaskDto.Title &&
                     t.Description == _updateTaskDto.Description &&

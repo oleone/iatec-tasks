@@ -32,9 +32,9 @@ namespace IATecTasks.ApplicationTest
         [Fact]
         public void MustInsertTask()
         {
-            _insertTaskUseCase.Execute(null, _createTaskDto);
+            _insertTaskUseCase.Execute(_createTaskDto);
 
-            _taskRepositoryMock.Verify(r => r.Insert(
+            _taskRepositoryMock.Verify(r => r.Add(
                 It.Is<CreateTaskDto>(
                     t => t.Title == _createTaskDto.Title &&
                     t.Description == _createTaskDto.Description &&
