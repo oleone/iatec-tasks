@@ -17,6 +17,7 @@ namespace IATecTasks.DomainTest.Tasks
         private bool _isDone;
         private bool _isDeleted;
         private bool _isInProgress;
+        private string _userId;
 
         private ITestOutputHelper _testOutputHelper;
 
@@ -30,7 +31,9 @@ namespace IATecTasks.DomainTest.Tasks
             _description = faker.Random.Words(50);
             _title = faker.Random.Words(25);
             _isDone = faker.Random.Bool();
-            _isDeleted = false;
+            _isDeleted = faker.Random.Bool();
+            _isInProgress = faker.Random.Bool();
+            _userId = Guid.NewGuid().ToString();
         }
 
         [Fact]
@@ -43,11 +46,10 @@ namespace IATecTasks.DomainTest.Tasks
                 IsDone = _isDone,
                 IsInProgress = _isInProgress,
                 Title = _title,
+                UserId = _userId
             };
 
-            var task = TaskBuilder.New().Build();
-
-            _testOutputHelper.WriteLine("MustBeCreateTask", task);
+            var task = TaskBuilder.New().Build(_title, _description, _userId, _isInProgress, _isDone, _isDeleted);
 
             expectedTask.ToExpectedObject().ShouldMatch(task);
         }

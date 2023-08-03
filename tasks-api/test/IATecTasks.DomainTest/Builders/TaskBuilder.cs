@@ -1,4 +1,7 @@
-﻿using IATecTasks.Domain;
+﻿using Bogus;
+using Bogus.DataSets;
+using ExpectedObjects.Strategies;
+using IATecTasks.Domain;
 using System;
 
 namespace IATecTasks.DomainTest.Builders
@@ -19,15 +22,31 @@ namespace IATecTasks.DomainTest.Builders
 
         public TaskBuilder()
         {
-            _title = "Title";
-            _description = "Description";
+            var faker = new Faker();
+
+            _description = faker.Random.Words(50);
+            _title = faker.Random.Words(25);
+            _isDone = faker.Random.Bool();
+            _isDeleted = faker.Random.Bool();
+            _isInProgress = faker.Random.Bool();
+
             _userId = Guid.NewGuid().ToString();
-            _isInProgress = false;
-            _isDone = false;
         }
 
         public Task Build()
         {
+            return new Task(_title, _description, _userId, _isInProgress, _isDone, _isDeleted);
+        }
+
+        public Task Build(string title, string description, string userId, bool isInProgress, bool isDone, bool isDeleted)
+        {
+            _description = description;
+            _title = title;
+            _isDone = isDone;
+            _isDeleted = isDeleted;
+            _isInProgress = isInProgress;
+            _userId = userId;
+
             return new Task(_title, _description, _userId, _isInProgress, _isDone, _isDeleted);
         }
 
