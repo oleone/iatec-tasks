@@ -6,6 +6,6 @@ namespace IATecTasks.Application.UseCases
 {
     public interface IUseCase<T>
     {
-        void Execute(T dto);
+        void Execute(string id, T dto);
     }
 }

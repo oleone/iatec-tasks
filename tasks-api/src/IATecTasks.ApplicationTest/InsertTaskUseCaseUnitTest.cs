@@ -13,7 +13,7 @@ namespace IATecTasks.ApplicationTest
     {
         private CreateTaskDto _createTaskDto;
         private IUseCase<CreateTaskDto> _insertTaskUseCase;
-        private Mock<ITaskRepository> _taskRepositoryMock;
+        private Mock<IRepository<CreateTaskDto>> _taskRepositoryMock;
 
         public InsertTaskUseCaseUnitTest()
         {
@@ -25,17 +25,17 @@ namespace IATecTasks.ApplicationTest
                 UserId = Guid.NewGuid().ToString(),
             };
 
-            _taskRepositoryMock = new Mock<ITaskRepository>();
+            _taskRepositoryMock = new Mock<IRepository<CreateTaskDto>>();
             _insertTaskUseCase = new InsertTaskUseCase(_taskRepositoryMock.Object);
         }
 
         [Fact]
         public void MustInsertTask()
         {
-            _insertTaskUseCase.Execute(_createTaskDto);
+            _insertTaskUseCase.Execute(null, _createTaskDto);
 
             _taskRepositoryMock.Verify(r => r.Insert(
-                It.Is<Task>(
+                It.Is<CreateTaskDto>(
                     t => t.Title == _createTaskDto.Title &&
                     t.Description == _createTaskDto.Description &&
                     t.UserId == _createTaskDto.UserId
