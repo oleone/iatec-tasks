@@ -74,6 +74,15 @@ namespace IATecTasks.DomainTest.Tasks
             ).WithMessage("Required field userId");
         }
 
+        [Theory]
+        [InlineData("12345")]
+        public void TaskMustHaveUserIdWithValidGuid(string userId)
+        {
+            Assert.Throws<ArgumentException>(
+                () => TaskBuilder.New().WithUserIdGuid(userId).Build()
+            ).WithMessage("Required field userId with valid Guid");
+        }
+
         public void Dispose()
         {
             _testOutputHelper.WriteLine("TaskUnitTest dispose is running...");

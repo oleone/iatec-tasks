@@ -45,7 +45,7 @@ namespace IATecTasks.DomainTest.Builders
             _isDone = isDone;
             _isDeleted = isDeleted;
             _isInProgress = isInProgress;
-            _userId = userId;
+            _userId = userId.ToString();
 
             return new Task(_title, _description, _userId, _isInProgress, _isDone, _isDeleted);
         }
@@ -57,6 +57,12 @@ namespace IATecTasks.DomainTest.Builders
         }
 
         public TaskBuilder WithUserId(string userId)
+        {
+            _userId = userId;
+            return this;
+        }
+
+        public TaskBuilder WithUserIdGuid(string userId)
         {
             _userId = userId;
             return this;

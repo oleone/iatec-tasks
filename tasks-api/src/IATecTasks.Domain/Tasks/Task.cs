@@ -14,17 +14,40 @@ namespace IATecTasks.Domain.Tasks
         public DateTimeOffset CreatedDate { get; private set; }
         public DateTimeOffset UpdatedDate { get; private set; }
 
+        public Task(string title, string description, string userId)
+        {
+            if (string.IsNullOrEmpty(title)) throw new ArgumentException("Required field title");
+
+            if (string.IsNullOrEmpty(userId)) throw new ArgumentException("Required field userId");
+
+            if (!bool.Parse(Guid.TryParse(userId, out _).ToString())) throw new ArgumentException("Required field userId with valid Guid");
+
+            Id = Guid.NewGuid().ToString();
+            UserId = Guid.Parse(userId).ToString();
+
+            Title = title;
+            Description = description;
+            IsInProgress = false;
+            IsDone = false;
+            IsDeleted = false;
+
+            CreatedDate = DateTimeOffset.Now;
+            UpdatedDate = DateTimeOffset.Now;
+        }
+
         public Task(string title, string description, string userId, bool isInProgress, bool isDone, bool isDeleted)
         {
             if (string.IsNullOrEmpty(title)) throw new ArgumentException("Required field title");
 
             if (string.IsNullOrEmpty(userId)) throw new ArgumentException("Required field userId");
 
+            if (!bool.Parse(Guid.TryParse(userId, out _).ToString())) throw new ArgumentException("Required field userId with valid Guid");
+
             Id = Guid.NewGuid().ToString();
+            UserId = Guid.Parse(userId).ToString();
 
             Title = title;
             Description = description;
-            UserId = userId;
             IsInProgress = isInProgress;
             IsDone = isDone;
             IsDeleted = isDeleted;
