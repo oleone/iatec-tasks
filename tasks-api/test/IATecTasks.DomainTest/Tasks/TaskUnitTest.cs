@@ -1,3 +1,4 @@
+using Bogus;
 using ExpectedObjects;
 using IATecTasks.Domain;
 using IATecTasks.DomainTest.Builders;
@@ -9,16 +10,13 @@ using Xunit.Sdk;
 
 namespace IATecTasks.DomainTest.Tasks
 {
-    public class TaskUnitTest: IDisposable
+    public class TaskUnitTest : IDisposable
     {
-        private string _id;
         private string _title;
         private string _description;
         private bool _isDone;
         private bool _isDeleted;
         private bool _isInProgress;
-        private DateTimeOffset _createdDate;
-        private DateTimeOffset _updatedDate;
 
         private ITestOutputHelper _testOutputHelper;
 
@@ -27,12 +25,11 @@ namespace IATecTasks.DomainTest.Tasks
             _testOutputHelper = testOutputHelper;
             _testOutputHelper.WriteLine("TaskUnitTest constructor is running...");
 
-            _createdDate = DateTimeOffset.Now;
-            _updatedDate = DateTimeOffset.Now;
-            _id = Guid.NewGuid().ToString();
-            _description = Guid.NewGuid().ToString();
-            _title = Guid.NewGuid().ToString();
-            _isDone = true;
+            var faker = new Faker();
+
+            _description = faker.Random.Words(50);
+            _title = faker.Random.Words(25);
+            _isDone = faker.Random.Bool();
             _isDeleted = false;
         }
 
@@ -41,17 +38,16 @@ namespace IATecTasks.DomainTest.Tasks
         {
             var expectedTask = new
             {
-               CreatedDate = _createdDate,
-               Description = _description,
-               Id = Guid.NewGuid(),
-               IsDeleted = _isDeleted,
-               IsDone = _isDone,
-               IsInProgress = _isInProgress,
-               Title = _title,
-               UpdatedDate = _updatedDate,
+                Description = _description,
+                IsDeleted = _isDeleted,
+                IsDone = _isDone,
+                IsInProgress = _isInProgress,
+                Title = _title,
             };
 
-            var task = new TaskBuilder().Build();
+            var task = TaskBuilder.New().Build();
+
+            _testOutputHelper.WriteLine("MustBeCreateTask", task);
 
             expectedTask.ToExpectedObject().ShouldMatch(task);
         }
@@ -61,7 +57,19 @@ namespace IATecTasks.DomainTest.Tasks
         [InlineData(null)]
         public void TaskMustHaveTitle(string title)
         {
-            Assert.Throws<ArgumentException>(() => TaskBuilder.New().WithTitle(title).Build()).WithMessage("Required field title");
+            Assert.Throws<ArgumentException>(
+                () => TaskBuilder.New().WithTitle(title).Build()
+            ).WithMessage("Required field title");
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void TaskMustHaveUserId(string userId)
+        {
+            Assert.Throws<ArgumentException>(
+                () => TaskBuilder.New().WithUserId(userId).Build()
+            ).WithMessage("Required field userId");
         }
 
         public void Dispose()
