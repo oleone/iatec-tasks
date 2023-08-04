@@ -7,13 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IATecTasks.API", "src\IATec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IATecTasks.Domain", "src\IATecTasks.Domain\IATecTasks.Domain.csproj", "{20324154-23F2-4EB6-AC28-E0E09EDED320}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IATecTasks.DomainTest", "test\IATecTasks.DomainTest\IATecTasks.DomainTest.csproj", "{F0E27F4E-A08B-4F5C-A4F6-703014B40DAC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IATecTasks.Repository", "src\IATecTasks.Repository\IATecTasks.Repository.csproj", "{21F0332C-2858-4F1A-9D73-0464B4486CD6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IATecTasks.Application", "src\IATecTasks.Application\IATecTasks.Application.csproj", "{FB105DA7-AED7-4581-A362-E60CFA695519}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IATecTasks.ApplicationTest", "test\IATecTasks.ApplicationTest\IATecTasks.ApplicationTest.csproj", "{8AE337E6-D17F-4321-9406-2761E1A25EB9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IATecTasks.DomainTest", "test\IATecTasks.DomainTest\IATecTasks.DomainTest.csproj", "{F0E27F4E-A08B-4F5C-A4F6-703014B40DAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
