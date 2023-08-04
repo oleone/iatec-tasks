@@ -12,12 +12,12 @@ namespace IATecTasks.DomainTest.Tasks
 {
     public class TaskUnitTest : IDisposable
     {
-        private string _title;
-        private string _description;
-        private bool _isDone;
-        private bool _isDeleted;
-        private bool _isInProgress;
-        private string _userId;
+        private readonly string _title;
+        private readonly string _description;
+        private readonly bool _isDone;
+        private readonly bool _isDeleted;
+        private readonly bool _isInProgress;
+        private readonly string _userId;
 
         private ITestOutputHelper _testOutputHelper;
 

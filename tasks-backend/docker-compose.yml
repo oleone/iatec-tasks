@@ -1,3 +1,5 @@
+version: '2.8'
+
 services:
   db:
     environment:
@@ -13,4 +15,4 @@ services:
         interval: 10s
         retries: 10
         start_period: 10s
-        timeout: 3s     
+        timeout: 3s

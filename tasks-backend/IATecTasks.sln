@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IATecTasks.Repository", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IATecTasks.Application", "src\IATecTasks.Application\IATecTasks.Application.csproj", "{FB105DA7-AED7-4581-A362-E60CFA695519}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IATecTasks.ApplicationTest", "src\IATecTasks.ApplicationTest\IATecTasks.ApplicationTest.csproj", "{8AE337E6-D17F-4321-9406-2761E1A25EB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IATecTasks.ApplicationTest", "test\IATecTasks.ApplicationTest\IATecTasks.ApplicationTest.csproj", "{8AE337E6-D17F-4321-9406-2761E1A25EB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
