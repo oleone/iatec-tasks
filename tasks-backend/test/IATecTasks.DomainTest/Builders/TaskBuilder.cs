@@ -1,4 +1,6 @@
-﻿using IATecTasks.Domain.Tasks;
+﻿using System;
+using Bogus;
+using IATecTasks.Domain.Tasks;
 
 namespace IATecTasks.DomainTest.Builders
 {
