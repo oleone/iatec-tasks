@@ -1,18 +1,19 @@
 version: '2.8'
 
 services:
-  db:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
+      SA_PASSWORD: "SqlServer2019!"
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: password_123
-    # mssql server image isn't available for arm64 architecture, so we use azure-sql instead
-    image: mcr.microsoft.com/azure-sql-edge:1.0.4
-    # If you really want to use MS SQL Server, uncomment the following line
-    #image: mcr.microsoft.com/mssql/server
-    restart: always
-    healthcheck:
-        test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P password_123 -Q 'SELECT 1' || exit 1"]
-        interval: 10s
-        retries: 10
-        start_period: 10s
-        timeout: 3s
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqlserver
+    volumes:
+      - ./sql/Tasks.sql:/tmp/Tasks.sql
+      - ./sql/init-tasksdatabase.sh:/tmp/init-tasksdatabase.sh
+    command: /bin/bash ./tmp/init-tasksdatabase.sh
