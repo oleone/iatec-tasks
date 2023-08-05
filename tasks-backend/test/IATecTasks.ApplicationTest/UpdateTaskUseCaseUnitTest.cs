@@ -1,6 +1,8 @@
 ﻿using Bogus;
 using IATecTasks.Application.Dtos;
+using IATecTasks.Application.Interfaces;
 using IATecTasks.Application.UseCases;
+using IATecTasks.Repository;
 using IATecTasks.Repository.Repositories;
 using Moq;
 using System;
@@ -13,8 +15,9 @@ namespace IATecTasks.ApplicationTest
     public class UpdateTaskUseCaseUnitTest
     {
         private UpdateTaskDto _updateTaskDto;
-        private IUseCase<UpdateTaskDto> _updateTaskUseCase;
+        private UpdateTaskUseCase _updateTaskUseCase;
         private Mock<ITaskRepository> _taskRepository;
+        private Mock<IRepository> _repository;
 
         public UpdateTaskUseCaseUnitTest()
         {
@@ -32,7 +35,9 @@ namespace IATecTasks.ApplicationTest
             };
 
             _taskRepository = new Mock<ITaskRepository>();
-            _updateTaskUseCase = new UpdateTaskUseCase(_taskRepository.Object);
+            _repository = new Mock<IRepository>();
+
+            _updateTaskUseCase = new UpdateTaskUseCase(_repository.Object, _taskRepository.Object);
         }
 
         [Fact]
@@ -40,7 +45,7 @@ namespace IATecTasks.ApplicationTest
         {
             _updateTaskUseCase.Execute(_updateTaskDto);
 
-            _taskRepository.Verify(r => r.Update(
+            _repository.Verify(r => r.Update(
                 It.Is<UpdateTaskDto>(
                     t => t.Title == _updateTaskDto.Title &&
                     t.Description == _updateTaskDto.Description &&

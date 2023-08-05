@@ -1,28 +1,42 @@
 ﻿using IATecTasks.Application.Dtos;
+using IATecTasks.Application.Interfaces;
 using IATecTasks.Domain;
+using IATecTasks.Repository;
 using IATecTasks.Repository.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IATecTasks.Application.UseCases
 {
-    public class UpdateTaskUseCase : IUseCase<UpdateTaskDto>
+    public class UpdateTaskUseCase : IUpdateTaskUseCase
     {
-        private ITaskRepository _taskRepository;
-        public UpdateTaskUseCase(ITaskRepository repository)
-        {
-            _taskRepository = repository;
+        private readonly ITaskRepository _taskRepository;
+        private readonly IRepository _repository;
 
+        public UpdateTaskUseCase(IRepository repository, ITaskRepository taskRepository)
+        {
+            _repository = repository;
+            _taskRepository = taskRepository;
         }
 
-        public void Execute(UpdateTaskDto dto)
+        public async Task<bool> Execute(UpdateTaskDto dto)
         {
-            _taskRepository.Update(dto);
-        }
+            try
+            {
+                _repository.Update(dto);
 
-        public Task<List<ListTaskDto>> Execute(string id)
-        {
-            throw new System.NotImplementedException();
+                if (await _repository.SaveChangesAsync())
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

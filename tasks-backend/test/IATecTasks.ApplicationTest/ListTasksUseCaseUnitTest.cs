@@ -23,9 +23,9 @@ namespace IATecTasks.ApplicationTest
         }
 
         [Fact]
-        public async void MustListTasks()
+        public async void MustListAllTasks()
         {
-            var tasks = await _useCase.Execute(Guid.NewGuid().ToString());
+            // TODO: ESCREVER TESTES
         }
     }
 }

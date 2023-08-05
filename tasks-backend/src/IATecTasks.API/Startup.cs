@@ -1,4 +1,7 @@
+using IATecTasks.Application.Interfaces;
+using IATecTasks.Application.UseCases;
 using IATecTasks.Repository;
+using IATecTasks.Repository.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace IATecTasksWebAPI
@@ -30,7 +34,20 @@ namespace IATecTasksWebAPI
             services.AddDbContext<IATecTasksContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
+                )
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
+
+            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
+
+            services.AddScoped<IInsertTaskUseCase, InsertTaskUseCase>();
+            services.AddScoped<IUpdateTaskUseCase, UpdateTaskUseCase>();
+            services.AddScoped<IListTaskUseCase, ListTaskUseCase>();
 
             services.AddCors();
             services.AddSwaggerGen();

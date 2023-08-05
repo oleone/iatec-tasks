@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IATecTasks.Repository.Repositories
 {
-    public interface ITaskRepository : IRepository
+    public interface ITaskRepository
     {
         Task<IEnumerable<ETask>> GetAllTasksByUserIdAsync(string userId);
     }

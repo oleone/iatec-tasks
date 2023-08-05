@@ -1,5 +1,4 @@
-﻿using IATecTasks.Repository.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +17,7 @@ namespace IATecTasks.Repository.Repositories
 
         public void Add<T>(T entity) where T : class
         {
-            _context.Add(entity);
+            _context.AddAsync(entity);
         }
 
         public void Delete<T>(T entity) where T : class

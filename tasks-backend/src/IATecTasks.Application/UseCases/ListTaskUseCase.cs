@@ -1,4 +1,6 @@
 ﻿using IATecTasks.Application.Dtos;
+using IATecTasks.Application.Interfaces;
+using IATecTasks.Repository;
 using IATecTasks.Repository.Repositories;
 using System;
 using System.Collections;
@@ -9,43 +11,44 @@ using System.Threading.Tasks;
 
 namespace IATecTasks.Application.UseCases
 {
-    public class ListTaskUseCase : IUseCase<ListTaskDto>
+    public class ListTaskUseCase : IListTaskUseCase
     {
-        private readonly ITaskRepository _repository;
+        private readonly ITaskRepository _taskRepository;
 
-        public ListTaskUseCase(ITaskRepository repository)
+        public ListTaskUseCase(ITaskRepository taskRepository)
         {
-            _repository = repository;
-        }
-
-        public void Execute(ListTaskDto dto)
-        {
-            throw new NotImplementedException();
+            _taskRepository = taskRepository;
         }
 
         public async Task<List<ListTaskDto>> Execute(string id)
         {
-            var list = new List<ListTaskDto>();
-
-            var tasks = await _repository.GetAllTasksByUserIdAsync(id);
-
-            foreach (var task in tasks)
+            try
             {
-                list.Add(new ListTaskDto
-                {
-                    Id = task.Id,
-                    CreatedDate = task.CreatedDate,
-                    Description = task.Description,
-                    IsDeleted = task.IsDeleted,
-                    IsDone = task.IsDone,
-                    IsInProgress = task.IsInProgress,
-                    Title = task.Title,
-                    UpdatedDate = task.UpdatedDate,
-                    UserId = task.UserId,
-                });
-            }
+                var tasks = await _taskRepository.GetAllTasksByUserIdAsync(id);
+                var list = new List<ListTaskDto>();
 
-            return await Task.FromResult(list);
+                foreach (var task in tasks)
+                {
+                    list.Add(new ListTaskDto()
+                    {
+                        CreatedDate = task.CreatedDate,
+                        Description = task.Description,
+                        Id = task.Id,
+                        IsDeleted = task.IsDeleted,
+                        IsDone = task.IsDone,
+                        IsInProgress = task.IsInProgress,
+                        Title = task.Title,
+                        UpdatedDate = task.UpdatedDate,
+                        UserId = task.UserId,
+                    });
+                }
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

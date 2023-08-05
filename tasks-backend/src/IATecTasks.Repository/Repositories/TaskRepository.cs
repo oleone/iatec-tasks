@@ -5,17 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IATecTasks.Domain;
-using IATecTasks.Repository.Context;
 
 namespace IATecTasks.Repository.Repositories
 {
-    public class TaskRepository : Repository
+    public class TaskRepository : ITaskRepository
     {
-        public TaskRepository(IATecTasksContext context) : base(context) { }
+        private readonly IATecTasksContext _context;
+
+        public TaskRepository(IATecTasksContext context)
+        {
+            _context = context;
+        }
 
         public async Task<IEnumerable<ETask>> GetAllTasksByUserIdAsync(string userId)
         {
-            IQueryable<ETask> query = _context.Tasks.Where(t => t.UserId == userId && t.IsDeleted == false);
+            IQueryable<ETask> query = _context.Tasks.Where(t => t.UserId == userId);
 
             return await query.ToListAsync();
         }

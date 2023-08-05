@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IATecTasks.Application.UseCases
+namespace IATecTasks.Application.Interfaces
 {
-    public interface IUseCase<T>
+    public interface IListTaskUseCase
     {
-        void Execute(T dto);
         Task<List<ListTaskDto>> Execute(string id);
     }
 }

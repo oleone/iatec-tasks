@@ -21,7 +21,7 @@ Esse projeto tem como objetivo o desenvolvimento de uma RESTFull API em .NET Cor
 ## Comandos Essenciais
 
 ```bash
-dotnet ef migrations add Initial -o Migrations
+dotnet ef migrations add Initial -p IATecTasks.Repository -s IATecTasks.API
 ```
 
 ```bash
@@ -29,5 +29,5 @@ dotnet ef migrations remove
 ```
 
 ```bash
-dotnet ef database update
+dotnet ef database update -s IATecTasks.API
 ```
