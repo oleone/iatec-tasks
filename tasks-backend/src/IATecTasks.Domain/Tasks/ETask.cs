@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IATecTasks.Domain.Identity;
+using System;
 
 namespace IATecTasks.Domain
 {
@@ -8,6 +9,7 @@ namespace IATecTasks.Domain
         public string Title { get; private set; }
         public string Description { get; private set; }
         public string UserId { get; private set; }
+        public User User { get; set; }
         public bool IsInProgress { get; private set; }
         public bool IsDone { get; private set; }
         public bool IsDeleted { get; private set; }
