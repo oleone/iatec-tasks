@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IATecTasks.Application.UseCases.User
 {
-    public class GetUserByUserNameUseCase
+    public class GetUserByUserNameUseCase : IGetUserByUserNameUseCase
     {
         private readonly UserManager<Domain.Identity.User> _userManager;
         private readonly SignInManager<Domain.Identity.User> _signInManager;

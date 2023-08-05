@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using IATecTasks.Domain.Identity;
 using AutoMapper;
 using Newtonsoft.Json.Linq;
+using IATecTasks.Application.Interfaces;
 
 namespace IATecTasks.Application.UseCases.User
 {
-    public class UpdateAccountUseCase
+    public class UpdateAccountUseCase : IUpdateAccountUseCase
     {
         private readonly UserManager<Domain.Identity.User> _userManager;
         private readonly SignInManager<Domain.Identity.User> _signInManager;

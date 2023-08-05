@@ -1,10 +1,14 @@
 using IATecTasks.Application.Interfaces;
 using IATecTasks.Application.UseCases;
+using IATecTasks.Application.UseCases.Token;
+using IATecTasks.Application.UseCases.User;
+using IATecTasks.Domain.Identity;
 using IATecTasks.Repository;
 using IATecTasks.Repository.Interfaces;
 using IATecTasks.Repository.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +39,22 @@ namespace IATecTasksWebAPI
             services.AddDbContext<IATecTasksContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
+
+            services.AddIdentityCore<User>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 4;
+                })
+                .AddRoles<Role>()
+                .AddRoleManager<RoleManager<Role>>()
+                .AddSignInManager<SignInManager<User>>()
+                .AddRoleValidator<RoleValidator<Role>>()
+                .AddEntityFrameworkStores<IATecTasksContext>()
+                .AddDefaultTokenProviders();
+
             services.AddControllers()
                 .AddJsonOptions(options =>
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
@@ -50,6 +70,13 @@ namespace IATecTasksWebAPI
             services.AddScoped<IUpdateTaskUseCase, UpdateTaskUseCase>();
             services.AddScoped<IListTaskUseCase, ListTaskUseCase>();
             services.AddScoped<IDeleteTaskUseCase, DeleteTaskUseCase>();
+
+            services.AddScoped<ICreateTokenUseCase, CreateTokenUseCase>();
+            services.AddScoped<ICheckUserExistsUseCase, CheckUserExistsUseCase>();
+            services.AddScoped<ICheckUserPasswordUseCase, CheckUserPasswordUseCase>();
+            services.AddScoped<ICreateAccountUseCase, CreateAccountUseCase>();
+            services.AddScoped<IGetUserByUserNameUseCase, GetUserByUserNameUseCase>();
+            services.AddScoped<IUpdateAccountUseCase, UpdateAccountUseCase>();
 
             services.AddCors();
             services.AddSwaggerGen();

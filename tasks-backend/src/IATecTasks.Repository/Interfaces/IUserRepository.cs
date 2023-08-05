@@ -9,6 +9,6 @@ namespace IATecTasks.Repository.Interfaces
     public interface IUserRepository : IRepository
     {
         Task<User> GetUserByIdAsync(string id);
-        Task<User> GetUserByUserNameAsync(string username);
+        Task<User> GetUserByUserNameAsync(string userName);
     }
 }

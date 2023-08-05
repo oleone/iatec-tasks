@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IATecTasks.Application.Interfaces;
 using IATecTasks.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IATecTasks.Application.UseCases.User
 {
-    public class CheckUserExistsUseCase
+    public class CheckUserExistsUseCase : ICheckUserExistsUseCase
     {
         private readonly UserManager<Domain.Identity.User> _userManager;
         private readonly SignInManager<Domain.Identity.User> _signInManager;

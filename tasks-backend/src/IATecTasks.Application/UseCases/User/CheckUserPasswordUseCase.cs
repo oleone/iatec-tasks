@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IATecTasks.Application.Dtos.User;
+using IATecTasks.Application.Interfaces;
 using IATecTasks.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IATecTasks.Application.UseCases.User
 {
-    public class CheckUserPasswordUseCase
+    public class CheckUserPasswordUseCase : ICheckUserPasswordUseCase
     {
         private readonly UserManager<Domain.Identity.User> _userManager;
         private readonly SignInManager<Domain.Identity.User> _signInManager;
@@ -32,7 +33,7 @@ namespace IATecTasks.Application.UseCases.User
         {
             try
             {
-                var user = await _userManager.Users.SingleOrDefaultAsync(user => user.UserName == userUpdateDto.Username.ToLower());
+                var user = await _userManager.Users.SingleOrDefaultAsync(user => user.UserName == userUpdateDto.UserName.ToLower());
 
                 return await _signInManager.CheckPasswordSignInAsync(user, password, false);
             }
