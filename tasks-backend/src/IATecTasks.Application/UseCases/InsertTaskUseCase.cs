@@ -1,21 +1,29 @@
 ﻿using IATecTasks.Application.Dtos;
-using IATecTasks.Domain.Tasks;
-using IATecTasks.Repository;
+using IATecTasks.Domain;
+using IATecTasks.Repository.Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IATecTasks.Application.UseCases
 {
     public class InsertTaskUseCase: IUseCase<CreateTaskDto>
     {
-        private IRepository<CreateTaskDto> _taskRepository;
+        private ITaskRepository _taskRepository;
 
-        public InsertTaskUseCase(IRepository<CreateTaskDto> taskRepository)
+        public InsertTaskUseCase(ITaskRepository taskRepository)
         {
             _taskRepository = taskRepository;
         }
 
         public void Execute(CreateTaskDto dto)
         {
-            _taskRepository.Add(dto);
+            var task = new ETask(dto.Title, dto.Description, dto.UserId);
+            _taskRepository.Add(task);
+        }
+
+        public Task<List<ListTaskDto>> Execute(string id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

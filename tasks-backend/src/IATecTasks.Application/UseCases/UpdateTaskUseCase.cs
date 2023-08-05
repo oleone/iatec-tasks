@@ -1,13 +1,15 @@
 ﻿using IATecTasks.Application.Dtos;
-using IATecTasks.Domain.Tasks;
-using IATecTasks.Repository;
+using IATecTasks.Domain;
+using IATecTasks.Repository.Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IATecTasks.Application.UseCases
 {
     public class UpdateTaskUseCase : IUseCase<UpdateTaskDto>
     {
-        private IRepository<UpdateTaskDto> _taskRepository;
-        public UpdateTaskUseCase(IRepository<UpdateTaskDto> repository)
+        private ITaskRepository _taskRepository;
+        public UpdateTaskUseCase(ITaskRepository repository)
         {
             _taskRepository = repository;
 
@@ -16,6 +18,11 @@ namespace IATecTasks.Application.UseCases
         public void Execute(UpdateTaskDto dto)
         {
             _taskRepository.Update(dto);
+        }
+
+        public Task<List<ListTaskDto>> Execute(string id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

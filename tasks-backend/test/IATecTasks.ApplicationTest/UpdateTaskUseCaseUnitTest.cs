@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using IATecTasks.Application.Dtos;
 using IATecTasks.Application.UseCases;
-using IATecTasks.Repository;
+using IATecTasks.Repository.Repositories;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace IATecTasks.ApplicationTest
     {
         private UpdateTaskDto _updateTaskDto;
         private IUseCase<UpdateTaskDto> _updateTaskUseCase;
-        private Mock<IRepository<UpdateTaskDto>> _taskRepository;
+        private Mock<ITaskRepository> _taskRepository;
 
         public UpdateTaskUseCaseUnitTest()
         {
@@ -31,7 +31,7 @@ namespace IATecTasks.ApplicationTest
                 UserId = Guid.NewGuid().ToString(),
             };
 
-            _taskRepository = new Mock<IRepository<UpdateTaskDto>>();
+            _taskRepository = new Mock<ITaskRepository>();
             _updateTaskUseCase = new UpdateTaskUseCase(_taskRepository.Object);
         }
 

@@ -17,3 +17,17 @@ Esse projeto tem como objetivo o desenvolvimento de uma RESTFull API em .NET Cor
 * Atualizar tarefa/ tarefas por usuário e ID de tarefa
 
 * Excluir tarefa
+
+## Comandos Essenciais
+
+```bash
+dotnet ef migrations add Initial -o Migrations
+```
+
+```bash
+dotnet ef migrations remove
+```
+
+```bash
+dotnet ef database update
+```

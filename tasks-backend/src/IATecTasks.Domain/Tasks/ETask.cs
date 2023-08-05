@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace IATecTasks.Domain.Tasks
+namespace IATecTasks.Domain
 {
-    public class Task
+    public class ETask
     {
         public string Id { get; private set; }
         public string Title { get; private set; }
@@ -14,7 +14,7 @@ namespace IATecTasks.Domain.Tasks
         public DateTimeOffset CreatedDate { get; private set; }
         public DateTimeOffset UpdatedDate { get; private set; }
 
-        public Task(string title, string description, string userId)
+        public ETask(string title, string description, string userId)
         {
             if (string.IsNullOrEmpty(title)) throw new ArgumentException("Required field title");
 
@@ -35,7 +35,7 @@ namespace IATecTasks.Domain.Tasks
             UpdatedDate = DateTimeOffset.Now;
         }
 
-        public Task(string title, string description, string userId, bool isInProgress, bool isDone, bool isDeleted)
+        public ETask(string title, string description, string userId, bool isInProgress, bool isDone, bool isDeleted)
         {
             if (string.IsNullOrEmpty(title)) throw new ArgumentException("Required field title");
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using Bogus;
-using IATecTasks.Domain.Tasks;
+using IATecTasks.Domain;
 
 namespace IATecTasks.DomainTest.Builders
 {
@@ -31,12 +31,12 @@ namespace IATecTasks.DomainTest.Builders
             _userId = Guid.NewGuid().ToString();
         }
 
-        public Task Build()
+        public ETask Build()
         {
-            return new Task(_title, _description, _userId, _isInProgress, _isDone, _isDeleted);
+            return new ETask(_title, _description, _userId, _isInProgress, _isDone, _isDeleted);
         }
 
-        public Task Build(string title, string description, string userId, bool isInProgress, bool isDone, bool isDeleted)
+        public ETask Build(string title, string description, string userId, bool isInProgress, bool isDone, bool isDeleted)
         {
             _description = description;
             _title = title;
@@ -45,7 +45,7 @@ namespace IATecTasks.DomainTest.Builders
             _isInProgress = isInProgress;
             _userId = userId.ToString();
 
-            return new Task(_title, _description, _userId, _isInProgress, _isDone, _isDeleted);
+            return new ETask(_title, _description, _userId, _isInProgress, _isDone, _isDeleted);
         }
 
         public TaskBuilder WithTitle(string title)

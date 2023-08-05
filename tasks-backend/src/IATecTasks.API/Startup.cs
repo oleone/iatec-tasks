@@ -28,7 +28,7 @@ namespace IATecTasksWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<IATecTasksContext>(
-                context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
+                context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
             services.AddControllers();
 

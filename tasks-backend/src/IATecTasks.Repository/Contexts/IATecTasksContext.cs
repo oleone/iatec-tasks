@@ -1,4 +1,4 @@
-﻿using IATecTasks.Domain.Tasks;
+﻿using IATecTasks.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,6 @@ namespace IATecTasks.Repository
     {
         public IATecTasksContext(DbContextOptions<IATecTasksContext> options) : base(options) { }
 
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<ETask> Tasks { get; set; }
     }
 }
