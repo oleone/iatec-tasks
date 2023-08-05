@@ -8,8 +8,4 @@
     <ProjectReference Include="..\IATecTasks.Repository\IATecTasks.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dtos\User\" />
-  </ItemGroup>
-
 </Project>

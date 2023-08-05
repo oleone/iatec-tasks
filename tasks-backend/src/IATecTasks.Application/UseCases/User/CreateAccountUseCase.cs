@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using IATecTasks.Application.Dtos.User;
-using IATecTasks.Application.Interfaces;
 using IATecTasks.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -10,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace IATecTasks.Application.UseCases.User
 {
-    public class GetUserByUserNameUseCase
+    public class CreateAccountUseCase
     {
         private readonly UserManager<Domain.Identity.User> _userManager;
         private readonly SignInManager<Domain.Identity.User> _signInManager;
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
 
-        public GetUserByUserNameUseCase(UserManager<Domain.Identity.User> userManager,
+        public CreateAccountUseCase(UserManager<Domain.Identity.User> userManager,
                                     SignInManager<Domain.Identity.User> signInManager,
                                     IMapper mapper,
                                     IUserRepository userRepository)
@@ -28,17 +27,20 @@ namespace IATecTasks.Application.UseCases.User
             _userRepository = userRepository;
         }
 
-        public async Task<UserUpdateDto> Execute(string userName)
+        public async Task<UserDto> Execute(UserDto userDto)
         {
             try
             {
-                var user = await _userRepository.GetUserByUserNameAsync(userName);
-                
-                if (user == null) return null;
+                var user = _mapper.Map<Domain.Identity.User>(userDto);
+                var result = await _userManager.CreateAsync(user, userDto.Password);
 
-                var userUpdateDto = _mapper.Map<UserUpdateDto>(user);
+                if (result.Succeeded)
+                {
+                    var userToReturn = _mapper.Map<UserDto>(user);
+                    return userToReturn;
+                }
 
-                return userUpdateDto;
+                return null;
             }
             catch (Exception ex)
             {
