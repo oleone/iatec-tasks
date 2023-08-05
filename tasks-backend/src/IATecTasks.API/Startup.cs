@@ -1,6 +1,7 @@
 using IATecTasks.Application.Interfaces;
 using IATecTasks.Application.UseCases;
 using IATecTasks.Repository;
+using IATecTasks.Repository.Interfaces;
 using IATecTasks.Repository.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

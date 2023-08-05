@@ -1,7 +1,7 @@
 ﻿using IATecTasks.Application.Dtos;
 using IATecTasks.Application.Interfaces;
 using IATecTasks.Domain;
-using IATecTasks.Repository;
+using IATecTasks.Repository.Interfaces;
 using IATecTasks.Repository.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace IATecTasks.Application.UseCases
 {
-    public class InsertTaskUseCase : IInsertTaskUseCase
+    public class DeleteTaskUseCase : IDeleteTaskUseCase
     {
         private readonly IRepository _repository;
 
-        public InsertTaskUseCase(IRepository repository)
+        public DeleteTaskUseCase(IRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<bool> Execute(CreateTaskDto dto)
+        public async Task<bool> Execute(UpdateTaskDto dto)
         {
             try
             {
-                var task = new ETask(dto.Title, dto.Description, dto.UserId);
+                var entity = new ETask(dto.Id, dto.Title, dto.Description, dto.UserId, dto.IsInProgress, dto.IsDone, dto.IsDeleted);
 
-                _repository.Add<ETask>(task);
+                _repository.Delete(entity);
 
                 if (await _repository.SaveChangesAsync())
                 {

@@ -1,7 +1,7 @@
 ﻿using IATecTasks.Application.Dtos;
 using IATecTasks.Application.Interfaces;
 using IATecTasks.Repository;
-using IATecTasks.Repository.Repositories;
+using IATecTasks.Repository.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;

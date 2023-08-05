@@ -97,9 +97,12 @@ namespace IATecTasks.API.Controllers
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    var deleted = await _deleteTaskUseCase.Execute(id);
+                    // TODO: CRIAR USECASE PARA LISTAR TASK POR ID
+                    //var model = await _listTaskByIdUseCase.Execute(id);
+                    //var deleted = await _deleteTaskUseCase.Execute(model);
 
-                    return Ok(deleted);
+                    //return Ok(deleted);
+                    return Ok(id);
                 }
                 else
                 {

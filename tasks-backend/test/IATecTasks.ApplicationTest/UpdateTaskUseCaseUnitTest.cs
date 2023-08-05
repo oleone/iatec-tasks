@@ -2,8 +2,7 @@
 using IATecTasks.Application.Dtos;
 using IATecTasks.Application.Interfaces;
 using IATecTasks.Application.UseCases;
-using IATecTasks.Repository;
-using IATecTasks.Repository.Repositories;
+using IATecTasks.Repository.Interfaces;
 using Moq;
 using System;
 using System.Collections.Generic;

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace IATecTasks.Application.Interfaces
 {
-    public interface IDeleteTaskUseCase
+    public interface IUseCase
     {
-        Task<bool> Execute(UpdateTaskDto entity);
+        Task<bool> Execute<T>(T dto) where T : class;
     }
 }

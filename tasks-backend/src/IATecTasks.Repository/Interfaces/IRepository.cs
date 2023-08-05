@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IATecTasks.Repository
+namespace IATecTasks.Repository.Interfaces
 {
     public interface IRepository
     {

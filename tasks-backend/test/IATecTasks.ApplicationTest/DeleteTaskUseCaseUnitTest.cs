@@ -2,8 +2,7 @@
 using IATecTasks.Application.Dtos;
 using IATecTasks.Application.Interfaces;
 using IATecTasks.Application.UseCases;
-using IATecTasks.Repository;
-using IATecTasks.Repository.Repositories;
+using IATecTasks.Repository.Interfaces;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -43,7 +42,7 @@ namespace IATecTasks.ApplicationTest
         [Fact]
         public async void MustDeleteTask()
         {
-            await _deleteTaskUseCase.Execute("");
+            await _deleteTaskUseCase.Execute(_taskDto);
 
             _repository.Verify(r => r.Delete(
                 It.Is<UpdateTaskDto>(

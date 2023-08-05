@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IATecTasks.Repository.Repositories
+namespace IATecTasks.Repository.Interfaces
 {
-    public interface ITaskRepository
+    public interface ITaskRepository: IRepository
     {
         Task<IEnumerable<ETask>> GetAllTasksByUserIdAsync(string userId);
     }
