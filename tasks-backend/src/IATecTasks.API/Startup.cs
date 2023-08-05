@@ -48,6 +48,7 @@ namespace IATecTasksWebAPI
             services.AddScoped<IInsertTaskUseCase, InsertTaskUseCase>();
             services.AddScoped<IUpdateTaskUseCase, UpdateTaskUseCase>();
             services.AddScoped<IListTaskUseCase, ListTaskUseCase>();
+            services.AddScoped<IDeleteTaskUseCase, DeleteTaskUseCase>();
 
             services.AddCors();
             services.AddSwaggerGen();

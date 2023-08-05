@@ -22,15 +22,18 @@ namespace IATecTasks.API.Controllers
         private readonly IInsertTaskUseCase _insertTaskUseCase;
         private readonly IUpdateTaskUseCase _updateTaskUseCase;
         private readonly IListTaskUseCase _listTaskUseCase;
+        private readonly IDeleteTaskUseCase _deleteTaskUseCase;
 
         public TaskController(
             IInsertTaskUseCase insertTaskUseCase,
             IUpdateTaskUseCase updateTaskUseCase,
-            IListTaskUseCase listTaskUseCase)
+            IListTaskUseCase listTaskUseCase,
+            IDeleteTaskUseCase deleteTaskUseCase)
         {
             _insertTaskUseCase = insertTaskUseCase;
             _updateTaskUseCase = updateTaskUseCase;
             _listTaskUseCase = listTaskUseCase;
+            _deleteTaskUseCase = deleteTaskUseCase;
         }
 
         // GET: api/tasks
@@ -47,13 +50,6 @@ namespace IATecTasks.API.Controllers
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-        }
-
-        // GET api/tasks/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
         }
 
         // POST api/tasks
@@ -74,14 +70,46 @@ namespace IATecTasks.API.Controllers
 
         // PUT api/tasks/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(string id, [FromBody] UpdateTaskDto task)
         {
+            try
+            {
+                if (string.IsNullOrEmpty(task.Id))
+                {
+                    task.Id = id;
+                }
+
+                var updated = await _updateTaskUseCase.Execute(task);
+
+                return Created("", updated);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         // DELETE api/tasks/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    var deleted = await _deleteTaskUseCase.Execute(id);
+
+                    return Ok(deleted);
+                }
+                else
+                {
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+                }
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
     }
 }

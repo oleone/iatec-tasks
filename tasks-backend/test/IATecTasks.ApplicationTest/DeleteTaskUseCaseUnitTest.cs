@@ -12,18 +12,18 @@ using Xunit;
 
 namespace IATecTasks.ApplicationTest
 {
-    public class UpdateTaskUseCaseUnitTest
+    public class DeleteTaskUseCaseUnitTest
     {
-        private UpdateTaskDto _updateTaskDto;
-        private UpdateTaskUseCase _updateTaskUseCase;
+        private UpdateTaskDto _taskDto;
+        private DeleteTaskUseCase _deleteTaskUseCase;
         private Mock<ITaskRepository> _taskRepository;
         private Mock<IRepository> _repository;
 
-        public UpdateTaskUseCaseUnitTest()
+        public DeleteTaskUseCaseUnitTest()
         {
             var faker = new Faker();
 
-            _updateTaskDto = new UpdateTaskDto
+            _taskDto = new UpdateTaskDto
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = faker.Random.Words(50),
@@ -37,20 +37,20 @@ namespace IATecTasks.ApplicationTest
             _taskRepository = new Mock<ITaskRepository>();
             _repository = new Mock<IRepository>();
 
-            _updateTaskUseCase = new UpdateTaskUseCase(_repository.Object, _taskRepository.Object);
+            _deleteTaskUseCase = new DeleteTaskUseCase(_repository.Object);
         }
 
         [Fact]
-        public async void MustUpdateTask()
+        public async void MustDeleteTask()
         {
-            await _updateTaskUseCase.Execute(_updateTaskDto);
+            await _deleteTaskUseCase.Execute("");
 
-            _repository.Verify(r => r.Update(
+            _repository.Verify(r => r.Delete(
                 It.Is<UpdateTaskDto>(
-                    t => t.Title == _updateTaskDto.Title &&
-                    t.Description == _updateTaskDto.Description &&
-                    t.UserId == _updateTaskDto.UserId &&
-                    t.Id == _updateTaskDto.Id
+                    t => t.Title == _taskDto.Title &&
+                    t.Description == _taskDto.Description &&
+                    t.UserId == _taskDto.UserId &&
+                    t.Id == _taskDto.Id
                 )
             ));
         }

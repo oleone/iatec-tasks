@@ -9,24 +9,20 @@ using System.Threading.Tasks;
 
 namespace IATecTasks.Application.UseCases
 {
-    public class UpdateTaskUseCase : IUpdateTaskUseCase
+    public class DeleteTaskUseCase : IDeleteTaskUseCase
     {
-        private readonly ITaskRepository _taskRepository;
         private readonly IRepository _repository;
 
-        public UpdateTaskUseCase(IRepository repository, ITaskRepository taskRepository)
+        public DeleteTaskUseCase(IRepository repository)
         {
             _repository = repository;
-            _taskRepository = taskRepository;
         }
 
-        public async Task<bool> Execute(UpdateTaskDto dto)
+        public async Task<bool> Execute(string id)
         {
             try
             {
-                var task = new ETask(dto.Id, dto.Title, dto.Description, dto.UserId, dto.IsInProgress, dto.IsDone, dto.IsDeleted);
-
-                _repository.Update(task);
+                _repository.Delete(id);
 
                 if (await _repository.SaveChangesAsync())
                 {
