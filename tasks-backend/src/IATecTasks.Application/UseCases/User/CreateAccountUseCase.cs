@@ -36,6 +36,7 @@ namespace IATecTasks.Application.UseCases.User
         {
             try
             {
+                userDto.UserName = userDto.UserName.ToLower();
                 var user = _mapper.Map<Domain.Identity.User>(userDto);
                 user.Id = Guid.NewGuid().ToString();
 

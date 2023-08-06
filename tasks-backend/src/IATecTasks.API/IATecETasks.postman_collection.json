@@ -1,0 +1,361 @@
+{
+	"info": {
+		"_postman_id": "8813a9b3-28f5-4d54-a792-90ec13ba4941",
+		"name": "IATecETasks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6166807",
+		"_collection_link": "https://ddc-mobilus.postman.co/workspace/Home-Workspace~bb08ac85-cbf7-4467-be11-64a431a2e049/collection/6166807-8813a9b3-28f5-4d54-a792-90ec13ba4941?action=share&creator=6166807&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "ETask",
+			"item": [
+				{
+					"name": "Get All ETasks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:20159/api/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "20159",
+							"path": [
+								"api",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ETasks By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:20159/api/tasks/11d05f9c-cbb2-41af-8813-39bf4ff41a2e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "20159",
+							"path": [
+								"api",
+								"tasks",
+								"11d05f9c-cbb2-41af-8813-39bf4ff41a2e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete ETasks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:20159/api/tasks/e148eb4b-9ad9-4ce5-b8c3-1f4b8bd3bb28",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "20159",
+							"path": [
+								"api",
+								"tasks",
+								"e148eb4b-9ad9-4ce5-b8c3-1f4b8bd3bb28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insert ETasks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"{{$randomWords}}\",\r\n    \"description\": \"{{$randomLoremText}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:20159/api/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "20159",
+							"path": [
+								"api",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update ETasks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"11d05f9c-cbb2-41af-8813-39bf4ff41a2e\",\r\n    \"title\": \"Kwacha teal generate loren ipsum\",\r\n    \"description\": \"Ut molestiae et est dolores.\\nEos asperiores reprehenderit esse assumenda eum exercitationem est totam.\\nEt aut perspiciatis et quia sit.\\nAliquam expedita rerum tempore nemo ipsa fugit explicabo est.\\nFuga ratione velit.\",\r\n    \"isInProgress\": true,\r\n    \"isDone\": false,\r\n    \"isDeleted\": false,\r\n    \"createdDate\": \"2023-08-06T13:52:01.8529344-03:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:20159/api/tasks/11d05f9c-cbb2-41af-8813-39bf4ff41a2e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "20159",
+							"path": [
+								"api",
+								"tasks",
+								"11d05f9c-cbb2-41af-8813-39bf4ff41a2e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = pm.response.json();\r",
+									"pm.collectionVariables.set(\"accessToken\", json.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"london_sauer\",\r\n    \"password\": \"senha1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:20159/api/accounts/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "20159",
+							"path": [
+								"api",
+								"accounts",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"{{$randomUserName}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"senha1234\",\r\n  \"firstName\": \"{{$randomFirstName}}\",\r\n  \"lastName\": \"{{$randomLastName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:20159/api/accounts/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "20159",
+							"path": [
+								"api",
+								"accounts",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:20159/api/accounts/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "20159",
+							"path": [
+								"api",
+								"accounts",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"d6823f4f-2b5b-4bc8-acfc-22a8e5f0956c\",\r\n    \"userName\": \"leonexbruno\",\r\n    \"email\": \"bruno.leone@bruno.com.br\",\r\n    \"phoneNumber\": \"(31) 9 9695-9074\",\r\n    \"firstName\": \"Bruno\",\r\n    \"lastName\": \"Leone\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:20159/api/accounts/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "20159",
+							"path": [
+								"api",
+								"accounts",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "accessToken",
+			"value": ""
+		}
+	]
+}

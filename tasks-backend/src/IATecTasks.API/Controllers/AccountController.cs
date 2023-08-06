@@ -74,7 +74,7 @@ namespace IATecTasks.API.Controllers
         {
             try
             {
-                var user = await _getUserByUserNameUseCase.Execute(userLogin.Username);
+                var user = await _getUserByUserNameUseCase.Execute(userLogin.UserName);
                 if (user == null) return Unauthorized("Usuário ou Senha está errado");
 
                 var result = await _checkUserPasswordUseCase.Execute(user, userLogin.Password);
