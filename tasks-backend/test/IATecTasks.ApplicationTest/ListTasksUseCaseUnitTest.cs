@@ -19,7 +19,7 @@ namespace IATecTasks.ApplicationTest
         private readonly Mock<ITaskRepository> _mockTasksRepository;
         private readonly ListTaskUseCase _listTaskUseCase;
 
-        private readonly List<ListTaskDto> _listTasks;
+        private readonly List<ETaskListDto> _listTasks;
 
         private readonly Guid _userId;
 
@@ -28,7 +28,7 @@ namespace IATecTasks.ApplicationTest
             _mockTasksRepository = new Mock<ITaskRepository>();
             _listTaskUseCase = new ListTaskUseCase(_mockTasksRepository.Object);
 
-            _listTasks = new List<ListTaskDto>();
+            _listTasks = new List<ETaskListDto>();
 
             var faker = new Faker();
 
@@ -36,7 +36,7 @@ namespace IATecTasks.ApplicationTest
 
             for (int i = 0; i < 10; i++)
             {
-                var task = new ListTaskDto()
+                var task = new ETaskListDto()
                 {
                     CreatedDate = DateTime.UtcNow,
                     Description = faker.Random.Words(),
@@ -54,7 +54,7 @@ namespace IATecTasks.ApplicationTest
 
             for (int i = 0; i < 10; i++)
             {
-                var task = new ListTaskDto()
+                var task = new ETaskListDto()
                 {
                     CreatedDate = DateTime.UtcNow,
                     Description = faker.Random.Words(),

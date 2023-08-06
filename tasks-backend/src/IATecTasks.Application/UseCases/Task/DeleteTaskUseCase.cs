@@ -1,5 +1,6 @@
-﻿using IATecTasks.Application.Dtos;
-using IATecTasks.Application.Interfaces;
+﻿using AutoMapper;
+using IATecTasks.Application.Dtos;
+using IATecTasks.Application.Interfaces.ETask;
 using IATecTasks.Domain;
 using IATecTasks.Repository.Interfaces;
 using IATecTasks.Repository.Repositories;
@@ -12,19 +13,25 @@ namespace IATecTasks.Application.UseCases
     public class DeleteTaskUseCase : IDeleteTaskUseCase
     {
         private readonly IRepository _repository;
+        private readonly ITaskRepository _taskRepository;
+        private readonly IMapper _mapper;
 
-        public DeleteTaskUseCase(IRepository repository)
+        public DeleteTaskUseCase(IRepository repository, ITaskRepository taskRepository, IMapper mapper)
         {
             _repository = repository;
+            _taskRepository = taskRepository;
+            _mapper = mapper;
         }
 
-        public async Task<bool> Execute(UpdateTaskDto dto)
+        public async Task<bool> Execute(string id)
         {
             try
             {
-                var entity = new ETask(dto.Id, dto.Title, dto.Description, dto.UserId, dto.IsInProgress, dto.IsDone, dto.IsDeleted);
+                var task = await _taskRepository.GetETaskById(id);
 
-                _repository.Delete(entity);
+                if (task == null) return false;
+
+                _repository.Delete(task);
 
                 if (await _repository.SaveChangesAsync())
                 {

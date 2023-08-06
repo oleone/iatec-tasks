@@ -13,7 +13,7 @@ namespace IATecTasks.ApplicationTest
 {
     public class UpdateTaskUseCaseUnitTest
     {
-        private UpdateTaskDto _updateTaskDto;
+        private ETaskUpdateDto _updateTaskDto;
         private UpdateTaskUseCase _updateTaskUseCase;
         private Mock<ITaskRepository> _taskRepository;
         private Mock<IRepository> _repository;
@@ -22,7 +22,7 @@ namespace IATecTasks.ApplicationTest
         {
             var faker = new Faker();
 
-            _updateTaskDto = new UpdateTaskDto
+            _updateTaskDto = new ETaskUpdateDto
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = faker.Random.Words(50),
@@ -45,7 +45,7 @@ namespace IATecTasks.ApplicationTest
             await _updateTaskUseCase.Execute(_updateTaskDto);
 
             _repository.Verify(r => r.Update(
-                It.Is<UpdateTaskDto>(
+                It.Is<ETaskUpdateDto>(
                     t => t.Title == _updateTaskDto.Title &&
                     t.Description == _updateTaskDto.Description &&
                     t.UserId == _updateTaskDto.UserId &&

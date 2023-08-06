@@ -11,7 +11,7 @@ namespace IATecTasks.ApplicationTest
 {
     public class InsertTaskUseCaseUnitTest
     {
-        private CreateTaskDto _createTaskDto;
+        private ETaskCreateDto _createTaskDto;
         private InsertTaskUseCase _insertTaskUseCase;
 
         private Mock<IRepository> _repositoryMock;
@@ -20,7 +20,7 @@ namespace IATecTasks.ApplicationTest
         public InsertTaskUseCaseUnitTest()
         {
             var faker = new Faker();
-            _createTaskDto = new CreateTaskDto
+            _createTaskDto = new ETaskCreateDto
             {
                 Title = faker.Random.Words(20),
                 Description = faker.Random.Words(50),

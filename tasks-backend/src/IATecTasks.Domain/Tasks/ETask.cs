@@ -67,7 +67,7 @@ namespace IATecTasks.Domain
             if (!bool.Parse(Guid.TryParse(userId, out _).ToString())) throw new ArgumentException("Required field userId with valid Guid");
 
             Id = id;
-            UserId = Guid.Parse(userId).ToString();
+            UserId = userId;
 
             Title = title;
             Description = description;
@@ -75,6 +75,27 @@ namespace IATecTasks.Domain
             IsDone = isDone;
             IsDeleted = isDeleted;
 
+            UpdatedDate = DateTimeOffset.Now;
+        }
+
+        public ETask(string id, string title, string description, string userId, bool isInProgress, bool isDone, bool isDeleted, DateTimeOffset createdDate)
+        {
+            if (string.IsNullOrEmpty(title)) throw new ArgumentException("Required field title");
+
+            if (string.IsNullOrEmpty(userId)) throw new ArgumentException("Required field userId");
+
+            if (!bool.Parse(Guid.TryParse(userId, out _).ToString())) throw new ArgumentException("Required field userId with valid Guid");
+
+            Id = id;
+            UserId = userId;
+
+            Title = title;
+            Description = description;
+            IsInProgress = isInProgress;
+            IsDone = isDone;
+            IsDeleted = isDeleted;
+
+            CreatedDate = createdDate;
             UpdatedDate = DateTimeOffset.Now;
         }
     }

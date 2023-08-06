@@ -5,12 +5,13 @@ Esse projeto tem como objetivo o desenvolvimento de uma RESTFull API em .NET Cor
 ## Tecnologias Utilizadas
 
 * .NET Core
-* Docker
-* Identity Framework
+* Identity Server
+* SQLite
+* Entity Framework
 
 ## Métodos Disponíveis Para Consumo
 
-* Listar tarefas por usuário
+* Listar tarefas do usuário logado
 
 * Criar tarefas por usuário
 

@@ -1,7 +1,9 @@
-﻿using IATecTasks.Application.Dtos;
-using IATecTasks.Application.Interfaces;
+﻿using IATecTasks.API.Extensions;
+using IATecTasks.Application.Dtos;
+using IATecTasks.Application.Interfaces.ETask;
 using IATecTasks.Application.UseCases;
 using IATecTasks.Repository.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +17,9 @@ using System.Threading.Tasks;
 
 namespace IATecTasks.API.Controllers
 {
+    [Authorize]
     [Route("api/tasks")]
+    [Produces("application/json")]
     [ApiController]
     public class TaskController : ControllerBase
     {
@@ -23,26 +27,37 @@ namespace IATecTasks.API.Controllers
         private readonly IUpdateTaskUseCase _updateTaskUseCase;
         private readonly IListTaskUseCase _listTaskUseCase;
         private readonly IDeleteTaskUseCase _deleteTaskUseCase;
+        private readonly IGetTaskByIdUseCase _getTaskByIdUseCase;
 
         public TaskController(
             IInsertTaskUseCase insertTaskUseCase,
             IUpdateTaskUseCase updateTaskUseCase,
             IListTaskUseCase listTaskUseCase,
-            IDeleteTaskUseCase deleteTaskUseCase)
+            IDeleteTaskUseCase deleteTaskUseCase,
+            IGetTaskByIdUseCase getTaskByIdUseCase)
         {
             _insertTaskUseCase = insertTaskUseCase;
             _updateTaskUseCase = updateTaskUseCase;
             _listTaskUseCase = listTaskUseCase;
             _deleteTaskUseCase = deleteTaskUseCase;
+            _getTaskByIdUseCase = getTaskByIdUseCase;
         }
 
+        /// <summary>
+        /// Get all tasks by logged user
+        /// </summary>
+        /// <returns>A list of tasks by logged user</returns>
+        /// <response code="200">Returns the tasks list</response>
         // GET: api/tasks
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var tasks = await _listTaskUseCase.Execute("a89605f7-5e7e-4f7a-9ed6-92fee5b0aed9");
+                var userId = User.GetUserId();
+                var tasks = await _listTaskUseCase.Execute(userId);
 
                 return Ok(tasks);
             }
@@ -52,13 +67,55 @@ namespace IATecTasks.API.Controllers
             }
         }
 
-        // POST api/tasks
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateTaskDto task)
+        /// <summary>
+        /// Get task by id
+        /// </summary>
+        /// <param name="id" required="true">Task id</param>
+        /// <returns></returns>
+        // GET: api/tasks/1
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetById(string id)
         {
             try
             {
-                var inserted = await _insertTaskUseCase.Execute(task);
+                var userId = User.GetUserId();
+                var task = await _getTaskByIdUseCase.Execute(id);
+
+                return Ok(task);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Create Task
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     Post /tasks
+        ///     {
+        ///         "title": "This is the title of task",
+        ///         "description": "This is the description of task"
+        ///     }
+        ///     
+        /// </remarks>
+        // POST api/tasks
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Post([FromBody] ETaskCreateDto task)
+        {
+            try
+            {
+                var userId = User.GetUserId();
+                var inserted = await _insertTaskUseCase.Execute(task, userId);
 
                 return Ok(inserted);
             }
@@ -68,9 +125,17 @@ namespace IATecTasks.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Update task
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="task"></param>
+        /// <returns></returns>
         // PUT api/tasks/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, [FromBody] UpdateTaskDto task)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Put(string id, [FromBody] ETaskUpdateDto task)
         {
             try
             {
@@ -78,8 +143,8 @@ namespace IATecTasks.API.Controllers
                 {
                     task.Id = id;
                 }
-
-                var updated = await _updateTaskUseCase.Execute(task);
+                var userId = User.GetUserId();
+                var updated = await _updateTaskUseCase.Execute(task, userId);
 
                 return Created("", updated);
             }
@@ -89,20 +154,24 @@ namespace IATecTasks.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete task
+        /// </summary>
+        /// <param name="id">Task id</param>
+        /// <returns></returns>
         // DELETE api/tasks/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Delete(string id)
         {
             try
             {
                 if (!string.IsNullOrEmpty(id))
                 {
-                    // TODO: CRIAR USECASE PARA LISTAR TASK POR ID
-                    //var model = await _listTaskByIdUseCase.Execute(id);
-                    //var deleted = await _deleteTaskUseCase.Execute(model);
+                    var deleted = await _deleteTaskUseCase.Execute(id);
 
-                    //return Ok(deleted);
-                    return Ok(id);
+                    return Ok(deleted);
                 }
                 else
                 {

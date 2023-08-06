@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IATecTasks.Domain;
 using IATecTasks.Repository.Interfaces;
+using IATecTasks.Domain.Identity;
 
 namespace IATecTasks.Repository.Repositories
 {
@@ -18,6 +19,11 @@ namespace IATecTasks.Repository.Repositories
             IQueryable<ETask> query = _context.Tasks.Where(t => t.UserId == userId);
 
             return await query.ToListAsync();
+        }
+
+        public async Task<ETask> GetETaskById(string id)
+        {
+            return await _context.Tasks.FindAsync(id);
         }
     }
 }

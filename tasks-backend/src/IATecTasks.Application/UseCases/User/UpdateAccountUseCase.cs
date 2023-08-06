@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using IATecTasks.Domain.Identity;
 using AutoMapper;
 using Newtonsoft.Json.Linq;
-using IATecTasks.Application.Interfaces;
+using IATecTasks.Application.Interfaces.Account;
 
 namespace IATecTasks.Application.UseCases.User
 {
@@ -41,7 +41,11 @@ namespace IATecTasks.Application.UseCases.User
                 _mapper.Map(userUpdate, user);
 
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var result = await _userManager.ResetPasswordAsync(user, token, userUpdate.Password);
+
+                if (!string.IsNullOrEmpty(userUpdate.Password))
+                {
+                    await _userManager.ResetPasswordAsync(user, token, userUpdate.Password);
+                }
 
                 _userRepository.Update<Domain.Identity.User>(user);
 

@@ -1,4 +1,5 @@
-﻿using Bogus;
+﻿using AutoMapper;
+using Bogus;
 using IATecTasks.Application.Dtos;
 using IATecTasks.Application.Interfaces;
 using IATecTasks.Application.UseCases;
@@ -13,16 +14,17 @@ namespace IATecTasks.ApplicationTest
 {
     public class DeleteTaskUseCaseUnitTest
     {
-        private UpdateTaskDto _taskDto;
+        private ETaskUpdateDto _taskDto;
         private DeleteTaskUseCase _deleteTaskUseCase;
         private Mock<ITaskRepository> _taskRepository;
         private Mock<IRepository> _repository;
+        private Mock<IMapper> _mapper;
 
         public DeleteTaskUseCaseUnitTest()
         {
             var faker = new Faker();
 
-            _taskDto = new UpdateTaskDto
+            _taskDto = new ETaskUpdateDto
             {
                 Id = Guid.NewGuid().ToString(),
                 Description = faker.Random.Words(50),
@@ -30,25 +32,24 @@ namespace IATecTasks.ApplicationTest
                 IsDone = faker.Random.Bool(),
                 IsInProgress = faker.Random.Bool(),
                 Title = faker.Random.Words(20),
-                UserId = Guid.NewGuid().ToString(),
             };
 
             _taskRepository = new Mock<ITaskRepository>();
             _repository = new Mock<IRepository>();
+            _mapper = new Mock<IMapper>();
 
-            _deleteTaskUseCase = new DeleteTaskUseCase(_repository.Object);
+            _deleteTaskUseCase = new DeleteTaskUseCase(_repository.Object, _taskRepository.Object, _mapper.Object);
         }
 
         [Fact]
         public async void MustDeleteTask()
         {
-            await _deleteTaskUseCase.Execute(_taskDto);
+            await _deleteTaskUseCase.Execute(_taskDto.Id);
 
             _repository.Verify(r => r.Delete(
-                It.Is<UpdateTaskDto>(
+                It.Is<ETaskUpdateDto>(
                     t => t.Title == _taskDto.Title &&
                     t.Description == _taskDto.Description &&
-                    t.UserId == _taskDto.UserId &&
                     t.Id == _taskDto.Id
                 )
             ));

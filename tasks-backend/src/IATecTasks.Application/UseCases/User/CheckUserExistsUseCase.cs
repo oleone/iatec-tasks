@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using IATecTasks.Application.Interfaces;
+using IATecTasks.Application.Interfaces.Account;
 using IATecTasks.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IATecTasks.Application.Interfaces
+namespace IATecTasks.Application.Interfaces.ETask
 {
     public interface IDeleteTaskUseCase
     {
-        Task<bool> Execute(UpdateTaskDto entity);
+        Task<bool> Execute(string id);
     }
 }

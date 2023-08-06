@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using IATecTasks.Application.Dtos.User;
-using IATecTasks.Application.Interfaces;
+using IATecTasks.Application.Interfaces.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

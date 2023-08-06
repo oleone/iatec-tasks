@@ -9,5 +9,6 @@ namespace IATecTasks.Repository.Interfaces
     public interface ITaskRepository: IRepository
     {
         Task<IEnumerable<ETask>> GetAllTasksByUserIdAsync(string userId);
+        Task<ETask> GetETaskById(string id);
     }
 }

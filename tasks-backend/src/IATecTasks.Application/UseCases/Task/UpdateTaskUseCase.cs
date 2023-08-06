@@ -1,5 +1,6 @@
-﻿using IATecTasks.Application.Dtos;
-using IATecTasks.Application.Interfaces;
+﻿using AutoMapper;
+using IATecTasks.Application.Dtos;
+using IATecTasks.Application.Interfaces.ETask;
 using IATecTasks.Domain;
 using IATecTasks.Repository.Interfaces;
 using System;
@@ -12,18 +13,22 @@ namespace IATecTasks.Application.UseCases
     {
         private readonly ITaskRepository _taskRepository;
         private readonly IRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly IGetTaskByIdUseCase _getTaskByIdUseCase;
 
-        public UpdateTaskUseCase(IRepository repository, ITaskRepository taskRepository)
+        public UpdateTaskUseCase(IRepository repository, ITaskRepository taskRepository, IGetTaskByIdUseCase getTaskByIdUseCase, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
             _taskRepository = taskRepository;
+            _getTaskByIdUseCase = getTaskByIdUseCase;
         }
 
-        public async Task<bool> Execute(UpdateTaskDto dto)
+        public async Task<bool> Execute(ETaskUpdateDto dto, string userId)
         {
             try
             {
-                var task = new ETask(dto.Id, dto.Title, dto.Description, dto.UserId, dto.IsInProgress, dto.IsDone, dto.IsDeleted);
+                var task = new ETask(dto.Id, dto.Title, dto.Description, userId, dto.IsInProgress, dto.IsDone, dto.IsDeleted, dto.CreatedDate);
 
                 _repository.Update(task);
 

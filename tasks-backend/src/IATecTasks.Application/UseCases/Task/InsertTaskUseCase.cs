@@ -1,5 +1,5 @@
 ﻿using IATecTasks.Application.Dtos;
-using IATecTasks.Application.Interfaces;
+using IATecTasks.Application.Interfaces.ETask;
 using IATecTasks.Domain;
 using IATecTasks.Repository.Interfaces;
 using IATecTasks.Repository.Repositories;
@@ -18,11 +18,11 @@ namespace IATecTasks.Application.UseCases
             _repository = repository;
         }
 
-        public async Task<bool> Execute(CreateTaskDto dto)
+        public async Task<bool> Execute(ETaskCreateDto dto, string userId)
         {
             try
             {
-                var task = new ETask(dto.Title, dto.Description, dto.UserId);
+                var task = new ETask(dto.Title, dto.Description, userId);
 
                 _repository.Add<ETask>(task);
 
